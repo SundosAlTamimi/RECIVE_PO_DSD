@@ -21,6 +21,8 @@ class _registrationCustomerState extends State<registrationCustomer> {
 //  listCustom= UserMethod.getAllCustomer() as List;
     UserMethod.getAllCustomer().then(( vals){
       setState(() {
+        print("valslength");
+        print(vals.length);
         vals.forEach((val){
           listCustom.add(val);
         });
@@ -47,7 +49,7 @@ class _registrationCustomerState extends State<registrationCustomer> {
 
     }
     else {
-      padSize = 200;
+      padSize = 20;
       padingTopTitle=50;
       padingtopItem=20;
     }
@@ -201,7 +203,7 @@ class _registrationCustomerState extends State<registrationCustomer> {
                   child:      Text(name+" : ",style: TextStyle(fontSize: 20,color: Colors.white,),),
 
                 ),
-                Expanded(child: TextField(controller:controllerName ,)),
+                Expanded(child: TextField(controller:controllerName , decoration: InputDecoration.collapsed(hintText: ""),)),
 
 
               ],
@@ -240,7 +242,6 @@ class _registrationCustomerState extends State<registrationCustomer> {
 
   }
 
-//  List<dynamic> listd=new List();
 
   Widget getCustomer() {
     return new Container(

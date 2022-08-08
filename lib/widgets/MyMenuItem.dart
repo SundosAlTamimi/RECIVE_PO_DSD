@@ -13,23 +13,6 @@ class MyMenuItem extends StatelessWidget {
       children: <Widget>[
         Container(
 
-        child: ListTile(
-          title: Text('My Profile',style: TextStyle(
-            color: Colors.white,
-            fontSize: 15
-          ),),
-          leading: Icon(Icons.person),
-
-          onTap: ( ){
-            Navigator.of(context).pushNamed('/second');
-            {
-              return Second_Screen();
-            }
-          },
-        ),
-        ),
-        Container(
-
           child: ListTile(
             title: Text('Transfer Point',style: TextStyle(
                 color: Colors.white,
@@ -61,13 +44,7 @@ class MyMenuItem extends StatelessWidget {
             leading:  Icon(Icons.translate),
             onTap: ( ){
               openLanguageSettingDialog(context);
-//              Navigator.of(context).pushNamed('/third');
-//              Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)
-//              {
-//                return Third_Screen();
-//              }
-//              ),
-//              );
+
 
             },
           ),
@@ -81,7 +58,6 @@ class MyMenuItem extends StatelessWidget {
             ),),
             leading:  Icon(Icons.translate),
             onTap: ( ){
-              openLanguageSettingDialog(context);
               Navigator.of(context).pushNamed('/registerCust');
 //              Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)
 //              {
@@ -110,6 +86,21 @@ class MyMenuItem extends StatelessWidget {
 //              }
 //              ),
 //              );
+
+            },
+          ),
+        ),
+        Container(
+
+          child: ListTile(
+            title: Text('MyPoint',style: TextStyle(
+                color: Colors.white,
+                fontSize: 15
+            ),),
+            leading:  Icon(Icons.card_giftcard),
+            onTap: ( ){
+
+              Navigator.of(context).pushNamed('/myPoint');
 
             },
           ),

@@ -51,9 +51,9 @@ class DataBaseHelper{
   static final String PRICE1 = "PRICE";
   //******************************************************************
   static final String NOTIFICATION = "NOTIFICATION";
-  static final String DESCRIPTION2 = "DESCRIPTION";
-  static final String DATE_FOR_NOTIFICATION2 = "DATE_FOR_NOTIFICATION";
-  static final String NOTIFICATION_NAME2 = "NOTIFICATION_NAME";
+  static final String DESCRIPTION2 = "DESCRIPTION2";
+  static final String DATE_FOR_NOTIFICATION2 = "DATE_FOR_NOTIFICATION2";
+  static final String NOTIFICATION_NAME2 = "NOTIFICATION_NAME2";
   static final String TIME_FOR_NOTIFICATION = "TIME_FOR_NOTIFICATION";
   static final String POINT_FOR_NOTIFICATION = "POINT_FOR_NOTIFICATION";
   //******************************************************************
@@ -147,7 +147,7 @@ class DataBaseHelper{
   static Future<Database> initialDb() async {
     Directory documentsDir = await getApplicationDocumentsDirectory();
     String path = join(documentsDir.path, 'app.db');
-    var userDb=await openDatabase(path, version: 4 , onCreate: _firstCreat, onUpgrade: _onUpgrade);
+    var userDb=await openDatabase(path, version: 5 , onCreate: _firstCreat, onUpgrade: _onUpgrade);
     print("userDb");
     return userDb;
   }

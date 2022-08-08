@@ -1,5 +1,5 @@
 import 'dart:math';
-//import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:menu_flutter/widgets/menu.dart';
@@ -10,7 +10,7 @@ class Third_Screen extends StatefulWidget {
 }
 
 class _Third_ScreenState extends State<Third_Screen> {
-//  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin ;
+
   List< String> language=["java","c#","dart","sqlite"];
   double textSize=10;
 
@@ -60,33 +60,6 @@ class _Third_ScreenState extends State<Third_Screen> {
       textSize++;
     });
   }
-  @override
-//  void initState() {
-//    // TODO: implement initState
-//    super.initState();
-//    flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
-//    var android =    new AndroidInitializationSettings('@mipmap/ic_launcher');
-//    var iOS = IOSInitializationSettings();
-//
-//    var initializationSettings = InitializationSettings( android, iOS);
-//    flutterLocalNotificationsPlugin.initialize(initializationSettings,
-//        onSelectNotification: onselectNotification);
-//
-//
-//  }
-   Future< void> onselectNotification(String payload)
-  {
-   print("notify");
-  }
-//  void showNotification() async{
-//    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-//        'channelId', 'channelName', 'channelDescription',
-//        importance: Importance.Max, priority: Priority.High, ticker: 'ticker');
-//    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-//    var platformChannelSpecifics = NotificationDetails(
-//        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-//    await flutterLocalNotificationsPlugin.show(
-//        0, 'plain title', 'plain body', platformChannelSpecifics,
-//        payload: 'tahani');
-//  }
+
+
 }

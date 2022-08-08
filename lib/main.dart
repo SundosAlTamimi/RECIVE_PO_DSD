@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:menu_flutter/screens/MyPoint.dart';
+import 'package:menu_flutter/screens/Notification.dart';
+import 'package:menu_flutter/screens/RewardGallery.dart';
 import 'package:menu_flutter/screens/home_screen.dart';
+import 'package:menu_flutter/screens/login.dart';
 import 'package:menu_flutter/screens/registrationCustomer.dart';
 import 'package:menu_flutter/screens/second_screen.dart';
 import 'package:menu_flutter/screens/third_screen.dart';
@@ -18,17 +22,19 @@ class MyApp extends StatelessWidget {
       theme:mythemeData ,
 //      home: Home_Screen(),
     routes: {
-        '/':(context)=> Home_Screen(),
+        '/localNotifi':(context)=> Notification_lical(),
+      '/':(context)=> LogIn(),
+
       '/second':(context)=> Second_Screen(),
       '/third':(context)=> Third_Screen(),
       '/registerCust':(context)=>registrationCustomer(),
+      '/myPoint':(context) =>MyPoint(),
+      '/gallery':(context) =>RewardGallery(),
+      '/homeScreen':(context) => Home_Screen(),
 
     },
     );
   }
 
-  showBarcodeDialog() {
-
-  }
 
 }

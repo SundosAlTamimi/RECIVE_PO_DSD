@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/services.dart';
 import 'package:menu_flutter/BL/UserMethod.dart';
 import 'package:menu_flutter/Models/CustomerInformation.dart';
 import 'package:menu_flutter/widgets/menu.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:barcode_flutter/barcode_flutter.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class Home_Screen extends StatefulWidget {
   @override
@@ -16,33 +21,46 @@ TextEditingController txtphone=new TextEditingController();
 TextEditingController txtemail=new TextEditingController();
 
 TextEditingController txtpoint=new TextEditingController();
+bool listNotEmpty=false;
  double padingTopTitle=0,padingtopItem=0;
 class _Home_ScreenState extends State<Home_Screen> {
-//  List listCustom=new List();
-//  void refreshScreen(){
-//    listCustom.clear();
-////  listCustom= UserMethod.getAllCustomer() as List;
-//  UserMethod.getAllCustomer().then(( vals){
-//    setState(() {
-//      vals.forEach((val){
-//        listCustom.add(val);
-//      });
-//
-//    });
-//
-//  });
-//  }
+  double parentWidth = 0;
+  double parentheight = 0;
+  List listCustom = new List();
+  void refreshScreen() {
+    listCustom.clear();
+    UserMethod.getAllCustomer().then((vals) {
+      setState(() {
+        if (vals.length != 0) {
+//          EmptyDialog();
+
+          debugPrint("truenotzero");
+        } else {
+//          EmptyDialog();
+          debugPrint("falseyeszero");
+        }
+        vals.forEach((val) {
+          listCustom.add(val);
+        });
+      });
+    });
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 //    barcodeDialog(context);
-//    refreshScreen();
+    refreshScreen();
+
   }
 
   @override
   Widget build(BuildContext context) {
+   parentWidth= MediaQuery.of(context).size.width;
+   parentheight= MediaQuery.of(context).size.height;
+//   SystemChrome.setPreferredOrientations(DeviceOrientation.portraitUp);
+
     double padSize = 0;
     double widthScreen = MediaQuery
         .of(context)
@@ -63,12 +81,6 @@ class _Home_ScreenState extends State<Home_Screen> {
       padingtopItem = 20;
     }
 
-//    Image.asset(
-//    "assets/images/purple_background.jpg",
-//      height: MediaQuery.of(context).size.height,
-//      width: MediaQuery.of(context).size.width,
-//      fit: BoxFit.cover,
-
     return Scaffold(
       drawer: MyDrawer(),
       appBar: AppBar(
@@ -76,7 +88,8 @@ class _Home_ScreenState extends State<Home_Screen> {
 //         Text('Barcode'),
          InkWell(
            onTap: (){
-             barcodeDialog(context);
+//             barcodeDialog(context);
+//             EmptyDialog();
            },
            child: Padding(
              padding: const EdgeInsets.all(8.0),
@@ -108,6 +121,13 @@ class _Home_ScreenState extends State<Home_Screen> {
           child: Container(
             color: Color(0x90FFFEFE),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+
+                Wrap(children: <Widget>[
+                  getBotumList(),
+                ],)
+              ],
 
             ),
           ),
@@ -122,56 +142,264 @@ class _Home_ScreenState extends State<Home_Screen> {
   }
 
   void barcodeDialog(BuildContext context) {
+     String phoneNo=(listCustom[0]["PHONE_NO"]);
+     print(phoneNo);
     Dialog simpleDialog = Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      child: Container(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        child: Container(
 
-        height: 200.0,
-        width: 300.0,
-//        color:  Color(0xA9FAF7F7),
-
-//        decoration: BoxDecoration(
-//          image: DecorationImage(image: AssetImage("assets/images/qrcode.png"),fit: BoxFit.fill),
-//
-//        ),
-     child:  Center(
-       child: BarCodeImage(
-           params:  UPCABarCodeParams(
-             "65833250884",
-             withText: true
-
-           ),
-
-//        child: Container(
-//          width: 100,
-//          height: 100,
-//          child:     BarCodeImage(
-//            data: "CODE39",
-//            codeType: BarCodeType.Code39,
-//            hasText: true,
-////            params: Code39BarCodeParams(
-////              "1234ABCD",
-////              lineWidth: 2.0,                // width for a single black/white bar (default: 2.0)
-////              barHeight: 90.0,               // height for the entire widget (default: 100.0)
-////              withText: true,                // Render with text label or not (default: false)
-////            ),
-//            onError: (error) {               // Error handler
-//              print('error = $error');
-//            },
-//          ),
-//
-          ),
-     ),
-
-      ),
+            height: 300.0,
+            width: 300.0,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Center(
+                //************************QR Barcode **********************************
+                child: QrImage(
+                  data: phoneNo,
+                  version: QrVersions.auto,
+                  size: 200.0,
+                  gapless: false,
+                ),
+              ),
+            )
+        )
     );
     showDialog(
         context: context, builder: ( context) => simpleDialog);
   }
+/*     body: new ListView.builder(
+          itemCount: id == null ? 0 : id.length,
+          itemBuilder: (BuildContext context, int index) {
+            return new GestureDetector( //You need to make my child interactive
+              onTap: () => print(id[index]),
+              child: new Card( //I am the clickable child
+                child: new Column(
+                  children: <Widget>[
+                    //new Image.network(video[index]),
+                    new Padding(padding: new EdgeInsets.all(3.0)),
+                    new Text(id[index],
+                      style: new TextStyle(fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+
+
+                  ],
+                ),),
+            );
+          }),*/
+ Widget getBotumList() {
+    return Container(
+        color:Color(0xFF460246),
+        width: parentWidth, height: parentheight/6,
+//        child: ListView
+//            .builder(
+//            itemCount: 8,
+//            itemBuilder: (BuildContext context, int index)
+//            {
+//   return  new
+
+  child: ListView(
+    scrollDirection: Axis.horizontal,
+    children: <Widget>[
+    Container(
+
+          child: Row(children: <Widget>[
+            GestureDetector(
+                
+                child: getItemList("Profile", Icons.person),
+              onTap: (){
+                  NavigationMethod(0);
+                  },
+            ),
+            SizedBox(width: 5,),
+            GestureDetector(child: getItemList("Notification", Icons.notifications_active),
+            onTap: (){
+//              EmptyDialog();
+              NavigationMethod(1);
+            },),
+            SizedBox(width: 5,),
+
+
+            GestureDetector(child: getItemList("Barcode", Icons.picture_in_picture),
+            onTap: (){
+              barcodeDialog(context);
+            },),
+            SizedBox(width: 5,),
+//          getItemList("point","assets/images/nav.jpg"),
+            GestureDetector(child: getItemList("point", Icons.card_giftcard),
+            onTap: (){
+              NavigationMethod(3);
+            },),
+            SizedBox(width: 5,),
+            GestureDetector(
+
+              child: getItemList("Profile", Icons.person),
+              onTap: (){
+                NavigationMethod(0);
+              },
+            ),
+            SizedBox(width: 5,),
+            GestureDetector(child: getItemList("Notification", Icons.notifications_active),
+              onTap: (){
+                NavigationMethod(1);
+              },),
+            SizedBox(width: 5,),
+
+
+            GestureDetector(child: getItemList("Barcode", Icons.picture_in_picture),
+              onTap: (){
+                barcodeDialog(context);
+              },),
+            SizedBox(width: 5,),
+//          getItemList("point","assets/images/nav.jpg"),
+            GestureDetector(child: getItemList("point", Icons.card_giftcard),
+              onTap: (){
+                NavigationMethod(3);
+              },),
+            SizedBox(width: 5,),
+
+
+
+          ])
+
+
+
+      ),
+    ],
+
+  )
+//   )
+
+
+    );
+ }
+//  onTap: () => NavigationMethod(index),);
+// Widget getItemList(String name,String fileImage) {
+  Widget getItemList(String name, IconData iconimage) {
+      return Container(
+      width:parentWidth/4,
+          height: parentheight/6,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              color: Color(0xFF460246),
+
+              child: name != "Barcode" ? Column(children: <Widget>[
+                Flexible(
+                  flex: 5,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                      child: Icon(
+                        iconimage, size: parentWidth / 12, color: Colors.white,),
+
+//              child: Image(image: AssetImage(fileImage),),
+                  ),
+                ),
+                Flexible(
+                  flex: 2,
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text(name, style: TextStyle(
+                        color: Colors.white, fontSize: parentWidth / 25),),
+                  ),
+                )
+              ],) :
+              Column(children: <Widget>[
+                Flexible(
+                  flex: 3,        child:
+                  Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(9.0),
+//              child: Icon(iconimage,size: parentWidth/10,color:Colors.white,),
+                      child: Image(image: AssetImage("assets/images/qrcode.png"),),
+                    ),
+
+                  ),
+                ),
+                Flexible(
+                  flex: 4,             child:
+                Padding(
+                    padding: const EdgeInsets.only(top:18.0,left: 5,right: 5,bottom: 5),
+                    child: Text(name, style: TextStyle(
+                        color: Colors.white, fontSize: parentWidth / 25),),
+                  ),
+                )
+              ],),
+            ),
+          ),
+//      ),
+
+      );
+  }
+
+  NavigationMethod(int pageIndex) {
+    switch (pageIndex) {
+      case 0:
+        print("0 clickedProfile");
+        Navigator.of(context).pushNamed('/second');
+
+
+
+        break;
+      case 1:
+        print("1 clickedNotification");
+        Navigator.of(context).pushNamed('/localNotifi');
+
+
+
+        break;
+      case 2:
+        print("2clickedProfile");
+        Navigator.of(context).pushNamed('/second');
+
+
+
+        break;
+      case 3:
+        print("3clickedpoint");
+        Navigator.of(context).pushNamed('/myPoint');
+
+
+
+        break;
+    }
+  }
+
+
+
+
+
+
+
+  //************************Normal Barcode *****************************
+//       child: BarCodeImage(
+//           params:  UPCABarCodeParams(
+//             "65833250884",
+//             withText: true
+//
+//           ),
+//********************************************************************
+
 }
 //double width = MediaQuery.of(context).size.width;
 //double height = MediaQuery.of(context).size.height;
 //double height35 = height * 0.35;
 
+
+
+
+isCustomerListImpty() {
+  UserMethod.getAllCustomer().then(( vals){
+
+    if(vals.length!=0)
+    {
+      listNotEmpty=true;
+
+    }
+    else{
+      listNotEmpty=false;
+    }
+  });
+}

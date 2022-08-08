@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:menu_flutter/BL/UserMethod.dart';
 
 import 'package:menu_flutter/Models/CustomerInformation.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:menu_flutter/utils/theme.dart';
@@ -341,55 +342,27 @@ class _Second_ScreenState extends State<Second_Screen> {
     );
   }
   Widget getBarcode() {
+    String phoneNo=(listCustom[0]["PHONE_NO"]);
+    print(phoneNo);
     return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(image: AssetImage("assets/images/qrcode.png"),fit:BoxFit.fill),
-//      color: Colors.amber
+      child: Center(
+        //************************QR Barcode **********************************
+        child: QrImage(
+          data: phoneNo,
+          version: QrVersions.auto,
+          size: 150.0,
+          gapless: false,
+        ),
       ),
-      width: MediaQuery.of(context).size.width-120,
-      height: 150,
+//      decoration: BoxDecoration(
+//        image: DecorationImage(image: AssetImage("assets/images/qrcode.png"),fit:BoxFit.fill),
+////      color: Colors.amber
+//      ),
+//      width: MediaQuery.of(context).size.width-120,
+//      height: 150,
     )
    ;
   }
-//    return new Scaffold(
-//      drawer: MyDrawer(),
-//      appBar: AppBar(
-//        title: Text(
-//            'Second Screen title '
-//        ),
-//
-//      ),
-//      body: Container(
-//      width: 400,
-//        height: 400,
-//        color: Colors.grey,
-//
-//
-//        child: Center(
-//        child: Column(
-//          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//          children: <Widget>[
-//            Text('user name'),
-//            TextField(
-//              controller: user_controller,onChanged: (txt){
-//    setState(() {
-//    username=user_controller.text;
-//            },
-//
-//            );}),
-//            InkWell(child: Icon(Icons.edit),onTap: (){
-//
-//              setState(() {
-//                username=user_controller.text;
-//              });
-//
-//            },),
-////          TextFormField()
-//          Text('hellow'+username),
-//          ],
-//        ),
-//        ),
-//      ),
-//    );
+
   }
 
